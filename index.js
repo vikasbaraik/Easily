@@ -5,17 +5,18 @@
 import express, { urlencoded } from "express";
 import path from "path";
 import expressEjsLayouts from "express-ejs-layouts";
-import UserController from "./src/controllers/user.controller.js";
+// import UserController from "./src/controllers/user.controller.js";
 import session from "express-session";
-import { auth } from "./src/middleware/auth.js";
+// import { auth } from "./src/middleware/auth.js";
+import { renderHomePage } from "./src/controllers/home.controller.js";
 
-const userController = new UserController();
+// const userController = new UserController();
 
 const app = express();
 
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: "simplepassword",
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
@@ -29,15 +30,14 @@ app.use(expressEjsLayouts);
 app.set("view engine", "ejs");
 app.set("views", path.resolve("src", "views"));
 
-// incorporate 'auth' middleware into the GET Route ('/') to authenticate users before granting access to the secure page
+app.get("/", renderHomePage);
 
-// Write your code here  ------->>>>>>>
-app.get("/", auth, userController.getSecure);
+// app.get("/", auth, userController.getSecure);
 
-app.get("/register", userController.getRegister);
-app.post("/register", userController.addUser);
-app.get("/login", userController.getLogin);
-app.post("/login", userController.loginUser);
-app.get("/logout", userController.userLogout);
+// app.get("/register", userController.getRegister);
+// app.post("/register", userController.addUser);
+// app.get("/login", userController.getLogin);
+// app.post("/login", userController.loginUser);
+// app.get("/logout", userController.userLogout);
 
 export default app;
