@@ -5,12 +5,12 @@
 import express, { urlencoded } from "express";
 import path from "path";
 import expressEjsLayouts from "express-ejs-layouts";
-// import UserController from "./src/controllers/user.controller.js";
+import UserController from "./src/controllers/user.controller.js";
 import session from "express-session";
 // import { auth } from "./src/middleware/auth.js";
 import { renderHomePage } from "./src/controllers/home.controller.js";
 
-// const userController = new UserController();
+const userController = new UserController();
 
 const app = express();
 
@@ -34,10 +34,11 @@ app.get("/", renderHomePage);
 
 // app.get("/", auth, userController.getSecure);
 
-// app.get("/register", userController.getRegister);
-// app.post("/register", userController.addUser);
-// app.get("/login", userController.getLogin);
-// app.post("/login", userController.loginUser);
-// app.get("/logout", userController.userLogout);
+app.get("/register", userController.register);
+app.get("/login", userController.login);
+
+app.post("/register", userController.registerUser);
+app.post("/login", userController.loginUser);
+app.get("/logout", userController.logoutUser);
 
 export default app;
